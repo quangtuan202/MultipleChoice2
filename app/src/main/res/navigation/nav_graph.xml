@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.multiplechoice2.WelcomeFragment"
+        android:label="CPA Multiple Choices"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.multiplechoice2.QuizFragment"
+        android:label="Quizzes"
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.example.multiplechoice2.ScoreFragment"
+        android:label="Scores"
+        tools:layout="@layout/fragment_score" >
+        <action
+            android:id="@+id/action_scoreFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.multiplechoice2.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
+</navigation>
