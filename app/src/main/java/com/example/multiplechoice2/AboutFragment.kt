@@ -1,11 +1,14 @@
 package com.example.multiplechoice2
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.multiplechoice2.R
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,10 @@ class AboutFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        var navController=findNavController()
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            navController.navigate(R.id.action_aboutFragment_to_quizFragment)
+        }
     }
 
     override fun onCreateView(
@@ -35,8 +42,14 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        var navController=findNavController()
+        Log.i("Back stack count : ", navController!!.backQueue.toString());
+//        for (entry in 0 until fm!!.backStackEntryCount) {
+//            Log.i("Back stack about: ","Found fragment: " + fm.getBackStackEntryAt(entry).id)
+//        }
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
+
 
     companion object {
         /**

@@ -2,18 +2,21 @@ package com.example.multiplechoice2
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.example.multiplechoice2.databinding.FragmentQuizBinding
 import com.example.multiplechoice2.database.Question
 import com.example.multiplechoice2.database.QuestionViewModel
+import com.example.multiplechoice2.databinding.FragmentQuizBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +53,7 @@ class QuizFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding=FragmentQuizBinding.inflate(layoutInflater)
         binding.buttonConfirm.setOnClickListener { buttonConfirmClickListener() }
@@ -70,11 +74,35 @@ class QuizFragment : Fragment() {
         }
 
         if(MainActivity.isQuizFinished){
+            Log.d("onCreateView: ","isQuizFinished: "+quizViewModel.currentIndex)
+            quizViewModel.setGoBackIndex()
+            binding.buttonConfirm.visibility=View.INVISIBLE
             review()
+        }
+        Log.d("onCreateView: ","onCreateView: "+quizViewModel.currentIndex)
+
+        val fm: FragmentManager = requireActivity().supportFragmentManager
+        Log.i("Back stack count quiz: ", fm!!.backStackEntryCount.toString());
+        for (entry in 0 until fm!!.backStackEntryCount) {
+            Log.i("Back stack quiz: ","Found fragment: " + fm.getBackStackEntryAt(entry).id)
         }
 
         return binding.root
 //        return inflater.inflate(R.layout.fragment_quiz, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        loadFragment(this)
+
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun setData(question: Question){
@@ -176,6 +204,7 @@ class QuizFragment : Fragment() {
         if(quizViewModel.quizCount>0){
             quizViewModel.quizCount--
         }
+
         if(quizViewModel.quizCount==1){
             binding.imgBack.visibility=View.INVISIBLE
         }
@@ -185,6 +214,7 @@ class QuizFragment : Fragment() {
         }
 
         quizViewModel.goBack()
+        Log.d("quizViewModel", quizViewModel.currentIndex.toString())
         setData(quizViewModel.currentQuestion)
         binding.txtQuizCount.text = "${quizViewModel.quizCount}/${quizViewModel.dataSize}"
         for ((button, answer) in answerMap) {
@@ -213,7 +243,6 @@ class QuizFragment : Fragment() {
         if(binding.imgBack.visibility==View.INVISIBLE){
             binding.imgBack.visibility=View.VISIBLE
         }
-        quizViewModel.moveToNext()
         setData(quizViewModel.currentQuestion)
         binding.txtQuizCount.text = "${quizViewModel.quizCount}/${quizViewModel.dataSize}"
         reviewQuestion()
@@ -233,6 +262,7 @@ class QuizFragment : Fragment() {
             binding.imgBack.visibility=View.VISIBLE
         }
         quizViewModel.moveToNext()
+        Log.d("quizViewModel", quizViewModel.currentIndex.toString())
         setData(quizViewModel.currentQuestion)
         binding.txtQuizCount.text = "${quizViewModel.quizCount}/${quizViewModel.dataSize}"
         reviewQuestion()
@@ -252,7 +282,6 @@ class QuizFragment : Fragment() {
             }
         }
     }
-
 
 
     companion object {

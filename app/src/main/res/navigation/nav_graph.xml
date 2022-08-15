@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_welcomeFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -22,6 +25,9 @@
         <action
             android:id="@+id/action_quizFragment_to_scoreFragment"
             app:destination="@id/scoreFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
 
     <fragment
@@ -32,15 +38,18 @@
         <action
             android:id="@+id/action_scoreFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_scoreFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.multiplechoice2.AboutFragment"
         android:label="About"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_about" >
         <action
-            android:id="@+id/action_welcomeFragment_to_quizFragment"
+            android:id="@+id/action_aboutFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
     </fragment>
 </navigation>

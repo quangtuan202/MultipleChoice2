@@ -29,7 +29,8 @@ class QuestionViewModel(): ViewModel() {
     val dataSize= questionBank.size
     var quizCount=1
 
-    private var currentIndex=0
+//    private var currentIndex=0
+    var currentIndex=0
 
 
     val currentQuestion: Question
@@ -44,6 +45,10 @@ class QuestionViewModel(): ViewModel() {
         if(currentIndex>0) {
             currentIndex -= 1
         }
+    }
+
+    fun setGoBackIndex(){
+        currentIndex=dataSize-1
     }
 
 }
